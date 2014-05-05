@@ -6,8 +6,6 @@ main.on_color = 0;
 main.cell_width = 10;
 main.canvas_width = 1000;
 main.paused = false;
-main.background_normal = 224;
-main.background_paused = 100;
 main.toggle_cell = function(x, y) {
     var color = main.state[x][y] ? main.off_color : main.on_color;
     main.processing.fill(main.processing.color(color));
@@ -17,8 +15,7 @@ main.toggle_cell = function(x, y) {
 
 main.paint_cell = function(x, y, state) {
     if(state) {
-//        var color = state ? main.on_color : main.off_color;
-        var color = main.on_color;
+        var color = state ? main.on_color : main.off_color;
         main.processing.fill(main.processing.color(color));
         main.processing.rect(x * main.cell_width, y * main.cell_width, main.cell_width, main.cell_width);
         main.state[x][y] = state;
@@ -78,10 +75,11 @@ main.sketch = function(processing) {
       }
     }
     processing.frameRate(10);    
-//    seed(100000);
+    seed(100000);
   }
 
   processing.draw = function() {
+    processing.background(main.background_normal);
     main.state = next();
     main.paint();
   };
@@ -143,7 +141,7 @@ window.onkeydown = function(event) {
     main.processing.background(main.background_paused);
   }
   main.paused = !main.paused;
-//  main.paint();
+  main.paint();
 };
 
 var processingInstance = new Processing(canvas, main.sketch);
